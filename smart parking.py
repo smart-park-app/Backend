@@ -107,7 +107,7 @@ def remove_user():
         conn = sqlite3.connect('test.db')
         print ("Opened database successfully")
 
-        conn.execute("DELETE from COMPANY where slot_id = ?", ownername)
+        conn.execute("DELETE from COMPANY where owner = ?", ownername)
         conn.commit()
         conn.close()
         return "Operation done successfully"
