@@ -11,8 +11,31 @@ from flask import Flask,render_template,request
 app = Flask(__name__)
 
 @app.route('/', methods =["GET", "POST"])
+def login():
+    if request.method=="POST":
+        user=request.form.get("username")
+        pswd=request.form.get("password") 
+        conn = sqlite3.connect('test.db')
+        cursor = conn.execute("SELECT * from logincred where username=? and pass=?" user,pswd)
+
+        for row in cursor:
+            if user==row[0] and pswd==row[1]:
+                return redirect('/home')
+
+        return render_template("login.html")
+
+
+@app.route('/register_owner', methods =["GET", "POST"])
+def register_now():
+    return render_template('register_owner.html')
+
+@app.route('/home', methods =["GET", "POST"])
 def home():
     return render_template("index.html")
+
+
+# conn = sqlite3.connect('test.db')
+# conn.execute('''CREATE TABLE logincred(username varchar(30), pass varchar(30));''')
 
 
 # conn = sqlite3.connect('test.db')
